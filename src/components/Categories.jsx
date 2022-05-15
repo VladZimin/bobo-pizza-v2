@@ -3,6 +3,7 @@ import React from 'react'
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
 const Categories = () => {
+  
   const [activeCat, setActiveCat] = React.useState(0)
 
   return (
