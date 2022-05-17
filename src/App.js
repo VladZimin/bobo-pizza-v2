@@ -5,16 +5,22 @@ import React from 'react'
 import Header from './components/Header'
 import Categories from './components/Categories'
 import Sort from './components/Sort'
-import PizzaCard from './components/PizzaCard'
+import PizzaCard from './components/PizzaCard/'
+import Skeleton from './components/PizzaCard/Skeleton'
+
 
 function App() {
 
   const [items, setItems] = React.useState([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     fetch('https://62828169ed9edf7bd885afb0.mockapi.io/items')
       .then(res => res.json())
-      .then(items => setItems(items))
+      .then(items => {
+        setItems(items)
+        setIsLoading(false)
+      })
   }, [])
 
   return (
@@ -29,7 +35,8 @@ function App() {
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
             {
-              items.map(obj => <PizzaCard key={obj.id} {...obj} />)
+              !isLoading ? items.map(obj => <PizzaCard key={obj.id} {...obj} />)
+                : [...Array(10)].map((_, i) => <Skeleton key={i} />)
             }
           </div>
         </div>
