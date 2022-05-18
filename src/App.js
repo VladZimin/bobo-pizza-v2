@@ -3,43 +3,21 @@ import './scss/app.scss'
 import React from 'react'
 
 import Header from './components/Header'
-import Categories from './components/Categories'
-import Sort from './components/Sort'
-import PizzaCard from './components/PizzaCard/'
-import Skeleton from './components/PizzaCard/Skeleton'
+import Home from './Pages/Home'
+import { Route, Routes } from 'react-router-dom'
+import NotFound from './Pages/NotFound'
 
 
 function App() {
-
-  const [items, setItems] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  React.useEffect(() => {
-    fetch('https://62828169ed9edf7bd885afb0.mockapi.io/items')
-      .then(res => res.json())
-      .then(items => {
-        setItems(items)
-        setIsLoading(false)
-      })
-  }, [])
 
   return (
     <div className='wrapper'>
       <Header />
       <div className='content'>
-        <div className='container'>
-          <div className='content__top'>
-            <Categories />
-            <Sort />
-          </div>
-          <h2 className='content__title'>Все пиццы</h2>
-          <div className='content__items'>
-            {
-              !isLoading ? items.map(obj => <PizzaCard key={obj.id} {...obj} />)
-                : [...Array(10)].map((_, i) => <Skeleton key={i} />)
-            }
-          </div>
-        </div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
       </div>
     </div>
   )
